@@ -5,7 +5,7 @@
 ### Шаг 1. Клонирование проекта
 
 ```
-$ git clone ssh://git@github.com:e1sep0/catalog-api.git && cd catalog-api
+$ git clone git@github.com:e1sep0/catalog-api.git && cd catalog-api
 ```
 
 ### Шаг 2. Установка зависимостей
@@ -25,14 +25,19 @@ $ php bin/console lexik:jwt:generate-keypair
 ### Шаг 4. Создаем схему БД
 
 ```
-$ php bin/console doctrine:schema:create
+$ php bin/console doctrine:database:create --if-not-exists
 $ php bin/console doctrine:migrations:migrate
+
+Для тестов
+$ php bin/console doctrine:database:create --env=test
+$ php bin/console doctrine:migrations:migrate --env=test
 ```
 
 ### Шаг 5. Загружаем фикстуры (Дев окружение).
 
 ```
 $ php bin/console doctrine:fixtures:load
+$ php bin/console doctrine:fixtures:load --env=test
 ```
 Создастся пользователь Логин: `admin@admin.com`  Пароль: `password`
 
@@ -43,6 +48,7 @@ $ php bin/console doctrine:fixtures:load
 $ php bin/console server:start
 http://127.0.0.1:8000/api
 ```
+
 
 ## Пояснения:
 
@@ -65,3 +71,24 @@ http://127.0.0.1:8000/api
   "price": 150
 }
 ```
+
+Или привзяать к текущей и создать новую:
+```json
+{
+  "name": "Новый товар",
+  "categories": [
+    "/api/categories/1",
+    {
+      "name": "Новая категория"
+    }
+  ],
+  "price": 350
+}
+```
+## Время
+* Разворот проекта с зависимостями: 1 час
+* Авторизация с JWT токеном: 1 час
+* Добавление сущностей: 15 минут
+* Настройка связей, эндпоинтов и групп: 1 час
+* Написание документации: 30 минут
+* Тесты: 2 часа
