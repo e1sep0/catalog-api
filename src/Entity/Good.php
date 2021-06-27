@@ -30,12 +30,14 @@ class Good
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"good", "new_good"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"good", "new_good"})
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -47,6 +49,7 @@ class Good
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank
      * @Assert\GreaterThan(0)
      * @Groups({"good", "new_good"})
      */
@@ -67,7 +70,7 @@ class Good
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

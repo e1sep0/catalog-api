@@ -19,32 +19,15 @@ class GoodRepository extends ServiceEntityRepository
         parent::__construct($registry, Good::class);
     }
 
-    // /**
-    //  * @return Good[] Returns an array of Good objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getGoodsByCategory(int $categoryId)
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('g');
 
-    /*
-    public function findOneBySomeField($value): ?Good
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $qb
+            ->join('g.categories', 'c')
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId);
+
+        return $query->getQuery()->getResult();
     }
-    */
 }
